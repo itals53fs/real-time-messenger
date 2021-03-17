@@ -3,27 +3,13 @@
     <template v-slot:default>
       <thead>
         <tr>
-          <th class="text-left">
-            <input
-              v-if="verificar"
-              type="text"
-              placeholder="Seu nome"
-              @keyup.enter="enviar"
-              v-model="name"
-            />
-            <p v-else>
-              <v-avatar color="blue" size="30" style="margin-right: 10px">{{
-                name[0]
-              }}</v-avatar
-              >{{ name }}
-            </p>
-          </th>
+          <th class="text-left">Lista de Usuários</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="item in desserts" :key="item.users">
           <td style="font-size: 18px; padding: 15px">
-            <v-avatar color="#fff" size="30" style="margin-right: 10px">{{
+            <v-avatar color="blue" size="30" style="margin-right: 10px">{{
               item.users[0]
             }}</v-avatar
             >{{ item.users }}
@@ -38,7 +24,7 @@ export default {
   data() {
     return {
       verificar: true,
-      name: '',
+      name: "",
       desserts: Object,
     };
   },
@@ -74,13 +60,11 @@ export default {
 </script>
 
 <style scoped>
-.lista{
-  background-color: #2C5364!important;
+.lista {
 }
 
-.lista input{
-  background-color: #fff !important;
-  border-radius:10px;
+.lista input {
+  border-radius: 10px;
   padding: 10px;
   outline: 0;
 }

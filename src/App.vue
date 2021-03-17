@@ -1,72 +1,83 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-     <Lista-users/>
-    </v-navigation-drawer>
+    <v-app-bar app color="#50fa7b" flat>
+      <v-container class="py-0 fill-height">
+        <div>Chat dos Sacolas</div>
+        <v-spacer></v-spacer>
 
-    <v-app-bar app id="nav-bar" class="bar">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
-      <v-toolbar-title class="title">Real Time Messenger</v-toolbar-title>
+        <v-responsive max-width="100">
+          <v-text-field
+          v-if="verificar"
+            dense
+            flat
+            hide-details
+            rounded
+            solo-inverted
+            @keyup.enter="fun"
+            v-model="name"
+            placeholder="nome..."
+            background-color="#7159c1"
+          ></v-text-field>
+          <v-avatar v-else color="blue" size="30" style="margin-right: 10px">{{
+              name[0]
+            }}</v-avatar> <span v-if="!verificar">{{name}}</span> 
+        </v-responsive>
+      </v-container>
     </v-app-bar>
-    <v-main class="main">
-      <div>
 
-      <router-view></router-view>
-      </div>
-      <imput/>
+    <v-main class="grey lighten-3">
+      <v-container>
+        <v-row>
+<!--           <v-col class="lista">
+            <v-sheet rounded="lg">
+              <lista-users />
+            </v-sheet>
+          </v-col> -->
+
+          <v-col>
+            <v-sheet min-height="70vh" rounded="lg">
+              <home />
+            </v-sheet>
+          </v-col>
+        </v-row>
+        <v-row>
+        </v-row>
+      </v-container>
+      <lista-users/>
     </v-main>
   </v-app>
 </template>
+
 <script>
-import Imput from './components/imput.vue';
-import ListaUsers from './components/listaUsers.vue';
+import listaUsers from "./components/listaUsers.vue";
+import Home from "./views/Home.vue";
 export default {
-  name: "App",
-  components: {ListaUsers, Imput },
-  data(){ 
-    return{
-    drawer: null,
-    }
-  },
+  components: { listaUsers, Home},
+  data: () => ({
+    links: ["Dashboard", "Messages", "Profile", "Updates"],
+    name: '',
+    verificar: true
+  }),
+  methods:{
+    fun(){
+      window.uid = this.name || "anonimo";
+      const ref = this.$firebase.database().ref("users");
+      const id = ref.push().key;
+
+      const data = {
+        users: this.name,
+      };
+      ref.child(id).set(data, (err) => {
+        if (err) {
+          console.error(err);
+        }else{
+          this.verificar= false
+        }
+      });
+    },
+  }
 };
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-.bar{
-  background-color: #2C5364 !important;
-}
-.bar .title{
-  margin: 0 auto;
-
-}
-  .main{
-    background: #0F2027;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  }
-  #inspire{
-    background-color: #2C5364 !important;
-  }
+<style scoped>
 </style>

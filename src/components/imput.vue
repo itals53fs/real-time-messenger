@@ -1,8 +1,8 @@
 <template>
   <div class="card">
-    <v-container fluid class="fluid">
-      <v-textarea autocomplete="text" class="messenger" v-model="messenger" @keyup.enter="enviar"></v-textarea>
-    </v-container>
+    <div fluid class="fluid">
+      <textarea autocomplete="text" class="messenger" v-model="messenger"></textarea>
+    </div>
     <button @click="enviar">➣</button>
   </div>
 </template>
@@ -69,25 +69,38 @@ export default {
 <style scoped>
 .messenger {
   background-color: #fff;
-  height: 200px;
-  margin: 0 auto;
-  border-radius: 20px;
+  height: 96px;
+  border-radius: 20px 0 0 20px;
   padding: 20px;
+  width: 100%;
+  margin: 0 0 5px 10px;
+  outline: 0;
+
 }
 .card {
-background: #0F2027;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #2C5364, #203A43, #0F2027); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+  background-color: #ccc;
   display: flex;
+  width: 100%;
+  height: 100px;
+  background-color: #282a36;
 }
 .fluid {
   width: 90%;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
 }
 button {
+  margin: 2px 0 2px 0;
   font-size: 50px;
-  margin-right: 20px;
+  margin: 0 10px 5px 0;
   border: none;
   outline: 0;
+  background-color: #fff;
+  border-radius:0 20px 20px 0;
+  background: #ADA996;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 }
 </style>
